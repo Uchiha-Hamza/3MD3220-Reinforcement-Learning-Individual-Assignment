@@ -1,74 +1,77 @@
-# Reinforcement Learning on Tiny Flappy Bird
+# Reinforcement Learning on Text Flappy Bird
 
-This project compares two reinforcement learning approaches on a simplified **Tiny Flappy Bird (TFB)** environment:
+This repository contains my individual project for **3MD3220 Reinforcement Learning**.  
+The goal is to compare two tabular reinforcement learning methods on **Text Flappy Bird**:
 
-- **Monte Carlo control**
-- **Sarsa($\lambda$)**
+- **constant-$\alpha$ first-visit Monte Carlo control**
+- **Sarsa($\lambda$) with replacing eligibility traces**
 
-The goal is to study how both agents learn, how sensitive they are to hyperparameters, how they generalize across level configurations, and what their limitations are when moving from a simplified environment toward the original Flappy Bird setting.
+The project studies their learning behavior, final performance, parameter sensitivity, learned value functions, and ability to generalize to new level configurations.
 
-## Project overview
+---
 
-The repository contains:
+## Project objective
 
-- implementation of the two RL agents
-- training and evaluation pipeline
-- parameter sweep experiments
-- generalization experiments across multiple TFB configurations
-- visualizations of learning curves, evaluation performance, value functions, and greedy policies
-- the report written for the assignment
+The purpose of this project is to answer the following questions:
 
-The main comparison focuses on:
+1. What experimental setup was implemented?
+2. How do Monte Carlo and Sarsa($\lambda$) differ in convergence speed, rewards, scores, and sensitivity to hyperparameters?
+3. How do the two Text Flappy Bird environments differ?
+4. Can the same agents be applied to the original Flappy Bird setting?
+5. How well does an agent trained on one level configuration transfer to another?
+6. What do the results reveal about the strengths and limits of tabular RL in this task?
 
-- convergence speed
-- reward and score achieved during training
-- sensitivity to parameters
-- robustness across environment settings
-- interpretability of learned value functions and policies
+---
 
-## Algorithms
+## Main result
+
+The main conclusion is clear:
+
+> **Sarsa($\lambda$) consistently outperforms Monte Carlo** on the compact Text Flappy Bird environment.
+
+Compared with Monte Carlo, Sarsa($\lambda$):
+
+- learns faster
+- reaches much higher training return and score
+- produces much stronger greedy evaluation performance
+- learns a cleaner and more structured policy over the discretized state space
+
+Monte Carlo still learns a meaningful policy, but it remains slower and significantly weaker overall.
+
+---
+
+## Environments
+
+Two environment variants are considered:
+
+### `TextFlappyBird-v0`
+This is the main environment used in the experiments.  
+It provides a compact low-dimensional state representation, making it suitable for **tabular reinforcement learning**.
+
+### `TextFlappyBird-screen-v0`
+This variant returns a screen-like observation.  
+It is included to discuss why a raw board or pixel-style representation is a poor fit for a pure tabular approach.
+
+---
+
+## Methods
 
 ### Monte Carlo control
-Monte Carlo learns from complete episodes by updating action values using the observed return after an episode ends.
+The Monte Carlo agent uses:
 
-Main characteristics:
+- first-visit updates
+- constant step size $\alpha$
+- epsilon-greedy exploration
 
-- simple and stable to implement
-- does not bootstrap
-- updates only after full episodes
-- can be slower to propagate useful information
+It updates action-values only after a complete episode has finished.
 
 ### Sarsa($\lambda$)
-Sarsa($\lambda$) is an on-policy temporal-difference method with eligibility traces.
+The Sarsa($\lambda$) agent uses:
 
-Main characteristics:
+- on-policy temporal-difference learning
+- replacing eligibility traces
+- epsilon-greedy exploration
 
-- bootstraps from intermediate estimates
-- updates online during episodes
-- usually learns faster
-- more sensitive to hyperparameters such as $\alpha$, $\epsilon$, and $\lambda$
+It updates action-values online during each episode and propagates reward information more quickly through traces.
 
-## Environment
-
-The experiments are conducted on a simplified **Tiny Flappy Bird** environment where the state is discretized using features such as:
-
-- horizontal distance to the next pipe gap
-- vertical offset from the center of the gap
-
-The action space is binary:
-
-- `idle`
-- `flap`
-
-This simplified environment makes tabular RL feasible and allows direct visualization of learned value functions and policies.
-
-## Main results
-
-The experiments show that:
-
-- **Sarsa($\lambda)** generally learns faster than Monte Carlo
-- Sarsa($\lambda) achieves higher training returns and evaluation scores
-- Monte Carlo is more conservative and usually converges to weaker policies
-- performance strongly depends on the hyperparameter choice, especially for Sarsa($\lambda)
-- agents trained on one configuration may lose a lot of performance on different level settings
-- the simplified TFB environment is useful for analysis, but it does not capture all the complexity of the original Flappy Bird game
+---
