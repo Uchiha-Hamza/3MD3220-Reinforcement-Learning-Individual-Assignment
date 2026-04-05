@@ -3,7 +3,7 @@
 This repository contains my individual project for **3MD3220 Reinforcement Learning**.  
 The goal is to compare two tabular reinforcement learning methods on **Text Flappy Bird**:
 
-- **constant-$\alpha$ first-visit Monte Carlo control**
+- **constant-** $\alpha$ **first-visit Monte Carlo control**
 - **Sarsa($\lambda$) with replacing eligibility traces**
 
 The project studies their learning behavior, final performance, parameter sensitivity, learned value functions, and ability to generalize to new level configurations.
