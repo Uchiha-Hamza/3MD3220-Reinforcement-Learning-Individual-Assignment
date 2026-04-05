@@ -3,7 +3,7 @@
 This project compares two reinforcement learning approaches on a simplified **Tiny Flappy Bird (TFB)** environment:
 
 - **Monte Carlo control**
-- **Sarsa(\(\lambda\))**
+- **Sarsa($\lambda$)**
 
 The goal is to study how both agents learn, how sensitive they are to hyperparameters, how they generalize across level configurations, and what their limitations are when moving from a simplified environment toward the original Flappy Bird setting.
 
@@ -38,15 +38,15 @@ Main characteristics:
 - updates only after full episodes
 - can be slower to propagate useful information
 
-### Sarsa(\(\lambda\))
-Sarsa(\(\lambda\)) is an on-policy temporal-difference method with eligibility traces.
+### Sarsa($\lambda$)
+Sarsa($\lambda$) is an on-policy temporal-difference method with eligibility traces.
 
 Main characteristics:
 
 - bootstraps from intermediate estimates
 - updates online during episodes
 - usually learns faster
-- more sensitive to hyperparameters such as \(\alpha\), \(\epsilon\), and \(\lambda\)
+- more sensitive to hyperparameters such as $\alpha$, $\epsilon$, and $\lambda$
 
 ## Environment
 
@@ -66,9 +66,9 @@ This simplified environment makes tabular RL feasible and allows direct visualiz
 
 The experiments show that:
 
-- **Sarsa(\(\lambda\))** generally learns faster than Monte Carlo
-- Sarsa(\(\lambda\)) achieves higher training returns and evaluation scores
+- **Sarsa($\lambda)** generally learns faster than Monte Carlo
+- Sarsa($\lambda) achieves higher training returns and evaluation scores
 - Monte Carlo is more conservative and usually converges to weaker policies
-- performance strongly depends on the hyperparameter choice, especially for Sarsa(\(\lambda\))
+- performance strongly depends on the hyperparameter choice, especially for Sarsa($\lambda)
 - agents trained on one configuration may lose a lot of performance on different level settings
 - the simplified TFB environment is useful for analysis, but it does not capture all the complexity of the original Flappy Bird game
